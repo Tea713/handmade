@@ -1,6 +1,11 @@
 #include <windows.h>
-#include <wingdi.h>
-#include <winuser.h>
+
+#define internal static
+#define local_persist static
+#define global_variable static
+
+// TODO: Just global for now
+global_variable bool Running;
 
 LRESULT MainWindowCallback(
     HWND Window, UINT Message, WPARAM WParam, LPARAM LParam) {
@@ -11,11 +16,12 @@ LRESULT MainWindowCallback(
       OutputDebugString("WM_SIZE");
     } break;
     case WM_DESTROY: {
-      OutputDebugString("WM_DESTROY");
+      // TODO: Handle this error
+      Running = false;
     } break;
     case WM_CLOSE: {
-      PostQuitMessage(0);
-      OutputDebugString("WM_CLOSE");
+      // TODO: Handle this with a message to the user
+      Running = false;
     } break;
     case WM_ACTIVATEAPP: {
       OutputDebugString("WM_ACTIVATEAPP");
@@ -68,8 +74,9 @@ int WINAPI WinMain(
         0);
 
     if (WindowHanlde) {
-      MSG Message;
-      for (;;) {
+      Running = true;
+      while (Running) {
+        MSG Message;
         BOOL MessageResult = GetMessage(&Message, 0, 0, 0);
         if (MessageResult > 0) {
           TranslateMessage(&Message);
