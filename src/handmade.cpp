@@ -2,8 +2,8 @@
 #include <wingdi.h>
 #include <winuser.h>
 
-LRESULT MainWindowCallback(HWND Window, UINT Message, WPARAM WParam,
-                           LPARAM LParam) {
+LRESULT MainWindowCallback(
+    HWND Window, UINT Message, WPARAM WParam, LPARAM LParam) {
   LRESULT Result = 0;
 
   switch (Message) {
@@ -39,8 +39,11 @@ LRESULT MainWindowCallback(HWND Window, UINT Message, WPARAM WParam,
   return (Result);
 }
 
-int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, PSTR CommandLine,
-                   int ShowCode) {
+int WINAPI WinMain(
+    HINSTANCE Instance,
+    HINSTANCE PrevInstance,
+    PSTR CommandLine,
+    int ShowCode) {
   WNDCLASS WindowClass = {};
 
   // WindowClass.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
@@ -51,9 +54,18 @@ int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, PSTR CommandLine,
 
   if (RegisterClass(&WindowClass)) {
     HWND WindowHanlde = CreateWindowEx(
-        0, WindowClass.lpszClassName, "Handmade Hero",
-        WS_OVERLAPPEDWINDOW | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT,
-        CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, Instance, 0);
+        0,
+        WindowClass.lpszClassName,
+        "Handmade Hero",
+        WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        0,
+        0,
+        Instance,
+        0);
 
     if (WindowHanlde) {
       MSG Message;
