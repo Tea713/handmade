@@ -115,7 +115,7 @@ int WINAPI WinMain(
   WindowClass.lpszClassName = "HandmadeHeroWindowClass";
 
   if (RegisterClass(&WindowClass)) {
-    HWND WindowHanlde = CreateWindowEx(
+    HWND WindowHandle = CreateWindowEx(
         0,
         WindowClass.lpszClassName,
         "Handmade Hero",
@@ -129,7 +129,7 @@ int WINAPI WinMain(
         Instance,
         0);
 
-    if (WindowHanlde) {
+    if (WindowHandle) {
       Running = true;
       while (Running) {
         MSG Message;
