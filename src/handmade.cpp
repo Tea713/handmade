@@ -31,8 +31,6 @@ internal void Win32ResizeDIBSection(int Width, int Height) {
     BitmapInfo.bmiHeader.biBitCount = 32;
     BitmapInfo.bmiHeader.biCompression = BI_RGB;
 
-    void *BitmapMemory;
-
     BitmapHandle = CreateDIBSection(
         BitmapDeviceContext, &BitmapInfo, DIB_RGB_COLORS, &BitmapMemory, 0, 0);
 }
@@ -108,7 +106,6 @@ int WINAPI WinMain(
     int ShowCode) {
     WNDCLASS WindowClass = {};
 
-    WindowClass.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
     WindowClass.lpfnWndProc = Win32MainWindowCallback;
     WindowClass.hInstance = Instance;
     // WindowClass.hIcon;
