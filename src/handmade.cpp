@@ -34,10 +34,15 @@ global_variable xinput_set_state *XInputSetState_ = XInputSetStateStub;
 #define XInputSetState XInputSetState_
 
 internal void Win32LoadXInput(void) {
-    HMODULE xinput_library = LoadLibrary("xinput1_4.dll");
+    HMODULE xinput_library = LoadLibraryA("xinput1_4.dll");
+    if (!xinput_library) {
+        xinput_library = LoadLibraryA("xinput1_3.dll");
+    }
     if (xinput_library) {
         XInputGetState = (xinput_get_state *)GetProcAddress(xinput_library, "XInputGetState");
+        if (!XInputGetState) { XInputGetState = XInputGetStateStub;}
         XInputSetState = (xinput_set_state *)GetProcAddress(xinput_library, "XInputSetState");
+        if (!XInputSetState) { XInputSetState = XInputSetStateStub;}
     }
 }
 
@@ -155,6 +160,10 @@ LRESULT Win32MainWindowCallback(HWND Window, UINT Message, WPARAM WParam, LPARAM
                 OutputDebugStringA("\n");
             } else if (vk_code == VK_SPACE) {
             }
+        }
+        bool alt_key_was_down = (LParam & (1 << 29)) != 1;;
+        if (vk_code == VK_F4 && alt_key_was_down) {
+            Running = false;
         }
     } break;
     case WM_CLOSE: {
